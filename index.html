@@ -8,13 +8,27 @@
 </head>
 <body>
   <h1>Expense Tracker</h1>
-  <div>
+  <div class="container">
+  <div class="inputAndBtn">
   <input type="text" id="itemNameInput">
   <input type="text" id="itemAmountInput">
-  <button>Add</button>
+  <button class="add">Add</button>
   </div>
   <div id="totalDisplay"></div>
   <div id="listContainer"></div>
-  <script></script>
+  </div>
+
+  <script>
+    const itemNameInput = document.querySelector("#itemNameInput");
+    const itemAmmountInput = document.querySelector("#itemAmountInput");
+    const add = document.querySelector(".add");
+    const inputAndBtn = document.querySelector("#inputAndBtn")
+    const totalDisplay = document.querySelector("#totalDisplay");
+    const listContainer = document.querySelector("#listContainer");
+    const container = document.querySelector(".container");
+  
+
+
+  </script>
 </body>
 </html>
