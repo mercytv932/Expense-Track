@@ -27,6 +27,9 @@
     const listContainer = document.querySelector("#listContainer");
     const container = document.querySelector(".container");
 
+    let expenses = [];
+
+
     add.addEventListener("click", ()=>{
       const name = itemNameInput.value;
       const amount = itemAmountInput.value;
@@ -41,6 +44,14 @@
       newDiv.appendChild(amountP);
 
       listContainer.appendChild(newDiv);
+
+       const newExpense = {
+        name: itemNameInput.value,
+        amount:itemAmountInput.value
+    }
+
+      expenses.push(newExpense);
+      console.log(expenses);
     });
 
   </script>
