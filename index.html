@@ -10,8 +10,8 @@
   <h1>Expense Tracker</h1>
   <div class="container">
   <div class="inputAndBtn">
-  <input type="text" id="itemNameInput">
-  <input type="text" id="itemAmountInput">
+  <input type="text" id="itemNameInput" placeholder="title...">
+  <input type="text" id="itemAmountInput" placeholder="$...">
   <button class="add">Add</button>
   </div>
   <div id="totalDisplay"></div>
@@ -20,14 +20,28 @@
 
   <script>
     const itemNameInput = document.querySelector("#itemNameInput");
-    const itemAmmountInput = document.querySelector("#itemAmountInput");
+    const itemAmountInput = document.querySelector("#itemAmountInput");
     const add = document.querySelector(".add");
-    const inputAndBtn = document.querySelector("#inputAndBtn")
+    const inputAndBtn = document.querySelector(".inputAndBtn")
     const totalDisplay = document.querySelector("#totalDisplay");
     const listContainer = document.querySelector("#listContainer");
     const container = document.querySelector(".container");
-  
 
+    add.addEventListener("click", ()=>{
+      const name = itemNameInput.value;
+      const amount = itemAmountInput.value;
+
+      const newDiv = document.createElement("div");
+      const nameP = document.createElement("p");
+      nameP.textContent = itemNameInput.value;
+      const amountP = document.createElement("p");
+      amountP.textContent = itemAmountInput.value;
+
+      newDiv.appendChild(nameP);
+      newDiv.appendChild(amountP);
+
+      listContainer.appendChild(newDiv);
+    });
 
   </script>
 </body>
