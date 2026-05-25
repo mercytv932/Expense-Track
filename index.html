@@ -34,25 +34,34 @@
       const name = itemNameInput.value;
       const amount = itemAmountInput.value;
 
-      const newDiv = document.createElement("div");
-      const nameP = document.createElement("p");
-      nameP.textContent = itemNameInput.value;
-      const amountP = document.createElement("p");
-      amountP.textContent = itemAmountInput.value;
-
-      newDiv.appendChild(nameP);
-      newDiv.appendChild(amountP);
-
-      listContainer.appendChild(newDiv);
-
        const newExpense = {
         name: itemNameInput.value,
         amount:itemAmountInput.value
     }
 
       expenses.push(newExpense);
-      console.log(expenses);
+      renderExpenses();
+      itemNameInput.value = "";
+      itemAmountInput.value = "";
     });
+
+    function renderExpenses(){
+      listContainer.innerHTML = "";
+
+      expenses.forEach(expense => {
+        const renderDiv = document.createElement("div");
+
+        const newP = document.createElement("p");
+        newP.textContent = expense.name;
+      
+        const newP1 = document.createElement("p");
+        newP1.textContent = expense.amount;
+
+        renderDiv.appendChild(newP);
+        renderDiv.appendChild(newP1);
+        listContainer.appendChild(renderDiv);
+      });
+    }
 
   </script>
 </body>
