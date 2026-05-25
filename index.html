@@ -41,6 +41,7 @@
 
       expenses.push(newExpense);
       renderExpenses();
+      updateTotal();
       itemNameInput.value = "";
       itemAmountInput.value = "";
     });
@@ -57,8 +58,18 @@
         const newP1 = document.createElement("p");
         newP1.textContent = expense.amount;
 
+        const deletBtn = document.createElement("button");
+        deletBtn.textContent = "X";
+
+        deletBtn.addEventListener("click", ()=>{
+          expenses = expenses.filter(item => item !== expense);
+          renderExpenses();
+          updateTotal();
+        });
+
         renderDiv.appendChild(newP);
         renderDiv.appendChild(newP1);
+        renderDiv.appendChild(deletBtn);
         listContainer.appendChild(renderDiv);
       });
     }
