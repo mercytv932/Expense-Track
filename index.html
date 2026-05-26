@@ -85,6 +85,28 @@
 
     }
 
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+
+    function loadFromStorage(){
+      const storedExpenses = localStorage.getItem('expenses');
+
+    if(storedExpenses){
+    
+      try{
+    const parsedExpenses = JSON.parse(storedExpenses);
+
+    expenses = parsedExpenses;
+    renderExpenses();
+    updateTotal();
+    } catch(error) {
+    console.error("Error parsing expenses from localStoarge:", error);
+    expenses = [];
+
+    }
+  }
+}
+    loadFromStorage();
+
   </script>
 </body>
 </html>
