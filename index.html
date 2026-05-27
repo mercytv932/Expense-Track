@@ -1,143 +1,414 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Expense</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker</title>
+
   <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background-color: linear-gradient(135deg, #0f172a, #111827, #1e293b);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      align-items: flex-start;
-      padding-top: 60px;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    .container {
-      width: 90%;
-      max-width: 550px;
-      background: rgba(255, 255, 255, 0.08);
-      background-color: aliceblue;
-      backdrop-filter: blur(12px);
-      border-radius: 24px;
-      padding: 30px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: #f8fafc;
+  background:
+    radial-gradient(circle at 78% 45%, rgba(88, 28, 135, 0.45), transparent 32%),
+    radial-gradient(circle at 20% 10%, rgba(37, 99, 235, 0.2), transparent 28%),
+    linear-gradient(135deg, #020617, #050816 45%, #0b1024);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 34px 18px;
+}
 
-    h1 {
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 25px;
-    }
-    
+.app {
+  width: 100%;
+  max-width: 760px;
+}
+
+.container {
+  width: 100%;
+  padding: 28px;
+  border-radius: 18px;
+  background: rgba(12, 17, 39, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(22px);
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo,
+.themeIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #2563eb, #4f46e5, #7c3aed);
+  box-shadow: 0 12px 28px rgba(79, 70, 229, 0.35);
+  font-weight: 900;
+  font-size: 1.4rem;
+}
+
+.themeIcon {
+  border-radius: 50%;
+  background: rgba(99, 102, 241, 0.24);
+  border: 1px solid rgba(165, 180, 252, 0.28);
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.7rem;
+  letter-spacing: 0;
+}
+
+.topBar p {
+  margin: 6px 0 0;
+  color: rgba(226, 232, 240, 0.72);
+}
+
+#totalDisplay {
+  min-height: 150px;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #4ade80;
+  background:
+    linear-gradient(135deg, rgba(20, 184, 166, 0.12), rgba(79, 70, 229, 0.2)),
+    rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+#totalDisplay::before {
+  content: "Total Expenses";
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+}
+
+.panel {
+  padding: 16px;
+  margin-top: 18px;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+h2 {
+  margin: 0 0 16px;
+  font-size: 1rem;
+}
+
+.inputAndBtn {
+  display: grid;
+  grid-template-columns: 1fr 1fr 180px;
+  gap: 12px;
+}
+
+input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 10px;
+  padding: 0 16px;
+  color: white;
+  background: rgba(2, 6, 23, 0.72);
+  outline: none;
+}
+
+input::placeholder {
+  color: rgba(203, 213, 225, 0.62);
+}
+
+input:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.12);
+}
+
+.add {
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: 800;
+  background: linear-gradient(135deg, #3b82f6, #4f46e5, #7c3aed);
+  cursor: pointer;
+  box-shadow: 0 14px 30px rgba(59, 130, 246, 0.32);
+}
+
+.add:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+#listContainer {
+  display: grid;
+  gap: 10px;
+}
+
+#listContainer:empty::before {
+  content: "No expenses yet";
+  display: block;
+  text-align: center;
+  padding: 24px;
+  border-radius: 12px;
+  color: rgba(226, 232, 240, 0.62);
+  background: rgba(2, 6, 23, 0.55);
+}
+
+#listContainer > div {
+  display: grid;
+  grid-template-columns: 1fr auto 40px;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(2, 6, 23, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+#listContainer p {
+  margin: 0;
+  font-weight: 800;
+}
+
+#listContainer p:nth-child(2) {
+  color: #4ade80;
+}
+
+#listContainer button {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #ef4444, #f43f5e);
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.footerNote {
+  margin-top: 20px;
+  padding: 16px;
+  text-align: center;
+  color: rgba(226, 232, 240, 0.78);
+  border-radius: 12px;
+  background: rgba(88, 28, 135, 0.22);
+  border: 1px solid rgba(168, 85, 247, 0.28);
+}
+
+@media (max-width: 680px) {
+  .container {
+    padding: 20px;
+  }
+
+  .inputAndBtn {
+    grid-template-columns: 1fr;
+  }
+
+  #totalDisplay {
+    font-size: 2.2rem;
+  }
+
+  #listContainer > div {
+    grid-template-columns: 1fr auto;
+  }
+
+  #listContainer button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
   </style>
 </head>
+
 <body>
-  <h1>Expense Tracker</h1>
-  <div class="container">
-  <div class="inputAndBtn">
-  <input type="text" id="itemNameInput" placeholder="title...">
-  <input type="text" id="itemAmountInput" placeholder="$...">
-  <button class="add">Add</button>
-  </div>
-  <div id="totalDisplay"></div>
-  <div id="listContainer"></div>
-  </div>
+  <main class="app">
+    <section class="container">
+      <header class="topBar">
+        <div class="brand">
+          <div class="logo">↗</div>
+          <div>
+            <h1>Expense Tracker</h1>
+            <p>Track your expenses, stay in control</p>
+          </div>
+        </div>
+
+        <div class="themeIcon">☾</div>
+      </header>
+
+      <div id="totalDisplay"></div>
+
+      <section class="panel">
+        <h2>Add New Expense</h2>
+
+        <div class="inputAndBtn">
+          <input type="text" id="itemNameInput" placeholder="Enter expense title..." />
+          <input type="text" id="itemAmountInput" placeholder="Enter amount..." />
+          <button class="add">Add Expense</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Expenses List</h2>
+        <div id="listContainer"></div>
+      </section>
+
+      <div class="footerNote">✦ Keep tracking your expenses and save more!</div>
+    </section>
+  </main>
+</body>
 
   <script>
     const itemNameInput = document.querySelector("#itemNameInput");
     const itemAmountInput = document.querySelector("#itemAmountInput");
     const add = document.querySelector(".add");
-    const inputAndBtn = document.querySelector(".inputAndBtn")
+    const inputAndBtn = document.querySelector(".inputAndBtn");
     const totalDisplay = document.querySelector("#totalDisplay");
     const listContainer = document.querySelector("#listContainer");
-    const container = document.querySelector(".container");
 
     let expenses = [];
 
+    add.addEventListener("click", addExpense);
 
-    add.addEventListener("click", ()=>{
-      const name = itemNameInput.value;
-      const amount = itemAmountInput.value;
-
-       const newExpense = {
-        name: itemNameInput.value,
-        amount:itemAmountInput.value
-    }
-
-      expenses.push(newExpense);
-      renderExpenses();
-      updateTotal();
-      itemNameInput.value = "";
-      itemAmountInput.value = "";
+    itemAmountInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        addExpense();
+      }
     });
 
-    function renderExpenses(){
+    itemNameInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        itemAmountInput.focus();
+      }
+    });
+
+    function addExpense() {
+      const name = itemNameInput.value.trim();
+      const amount = Number(itemAmountInput.value);
+
+      if (!name || !amount || amount <= 0) {
+        inputAndBtn.classList.add("shake");
+
+        setTimeout(() => {
+          inputAndBtn.classList.remove("shake");
+        }, 350);
+
+        return;
+      }
+
+      const newExpense = {
+        id: Date.now(),
+        name: name,
+        amount: amount
+      };
+
+      expenses.push(newExpense);
+      saveToStorage();
+      renderExpenses();
+      updateTotal();
+
+      itemNameInput.value = "";
+      itemAmountInput.value = "";
+      itemNameInput.focus();
+    }
+
+    function renderExpenses() {
       listContainer.innerHTML = "";
 
-      expenses.forEach(expense => {
+      if (expenses.length === 0) {
+        const emptyState = document.createElement("div");
+        emptyState.className = "empty-state";
+        emptyState.textContent = "No expenses yet. Add your first one above.";
+        listContainer.appendChild(emptyState);
+        return;
+      }
+
+      expenses.forEach((expense) => {
         const renderDiv = document.createElement("div");
+        renderDiv.className = "expense-item";
 
         const newP = document.createElement("p");
+        newP.className = "expense-name";
         newP.textContent = expense.name;
-      
+
         const newP1 = document.createElement("p");
-        newP1.textContent = expense.amount;
+        newP1.className = "expense-amount";
+        newP1.textContent = `$${expense.amount.toFixed(2)}`;
 
-        const deletBtn = document.createElement("button");
-        deletBtn.textContent = "X";
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "delete-btn";
+        deleteBtn.textContent = "X";
 
-        deletBtn.addEventListener("click", ()=>{
-          expenses = expenses.filter(item => item !== expense);
+        deleteBtn.addEventListener("click", () => {
+          expenses = expenses.filter((item) => item.id !== expense.id);
+          saveToStorage();
           renderExpenses();
           updateTotal();
         });
 
         renderDiv.appendChild(newP);
         renderDiv.appendChild(newP1);
-        renderDiv.appendChild(deletBtn);
+        renderDiv.appendChild(deleteBtn);
         listContainer.appendChild(renderDiv);
       });
     }
 
-    function updateTotal(){
+    function updateTotal() {
       let total = 0;
-      expenses.forEach(expense=>{
 
+      expenses.forEach((expense) => {
         total += Number(expense.amount);
       });
 
-      totalDisplay.textContent = `Total: $${total}`;
-
+      totalDisplay.innerHTML = `
+        <span class="total-label">Current total</span>
+        <span class="total-amount">$${total.toFixed(2)}</span>
+      `;
     }
 
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-
-    function loadFromStorage(){
-      const storedExpenses = localStorage.getItem('expenses');
-
-    if(storedExpenses){
-    
-      try{
-    const parsedExpenses = JSON.parse(storedExpenses);
-
-    expenses = parsedExpenses;
-    renderExpenses();
-    updateTotal();
-    } catch(error) {
-    console.error("Error parsing expenses from localStoarge:", error);
-    expenses = [];
-
+    function saveToStorage() {
+      localStorage.setItem("expenses", JSON.stringify(expenses));
     }
-  }
-}
+
+    function loadFromStorage() {
+      const storedExpenses = localStorage.getItem("expenses");
+
+      if (storedExpenses) {
+        try {
+          expenses = JSON.parse(storedExpenses);
+        } catch (error) {
+          console.error("Error parsing expenses from localStorage:", error);
+          expenses = [];
+        }
+      }
+
+      renderExpenses();
+      updateTotal();
+    }
+
     loadFromStorage();
-
   </script>
 </body>
 </html>
